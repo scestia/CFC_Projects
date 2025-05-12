@@ -45,5 +45,5 @@ This portfolio was created as part of my learning journey at the **Centre for Cy
 
 If you'd like to connect or collaborate, feel free to reach me at:
 
-- 📧 Email: benkamht@gmail.com
+- 📧 Email: benkamhz@gmail.com
 
