@@ -1,1 +1,29 @@
+input {
+  file {
+    path => "/var/log/syslog"
+    start_position => "beginning"
+    sincedb_path => "/dev/null"  # Avoids remembering read state
+  }
+}
 
+filter {
+  grok {
+    match => { "message" => "%{SYSLOGTIMESTAMP:timestamp} %{SYSLOGHOST:hostname} %{DATA:program}(?:\[%{POSINT:pid}\])?: %{GREEDYDATA:syslog_message}" }
+  }
+
+  date {
+    match => [ "timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss" ]
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => ["https://localhost:9200"]
+    index => "syslog-test"
+    user => "elastic"
+    password => "your_password"
+    cacert => "/etc/elasticsearch/certs/http_ca.crt"
+  }
+
+  stdout { codec => rubydebug }
+}
