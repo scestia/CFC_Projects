@@ -1,0 +1,163 @@
+Name: Benedict Kam
+Student Code: S5
+Trainer: Samson
+
+# Table Of Contents
+
+- Introduction
+- Methodologies
+- Discussion
+- Conclusion
+- Recommendations
+
+---
+
+# Introduction
+
+With the increasing frequency of cyber threats targeting weak configurations and poor credential practices, this project focuses on developing an automated tool for **vulnerability scanning** and **weak password detection**. The tool is designed to help students and junior penetration testers simulate early-stage reconnaissance and brute-force attacks using a combination of open-source security tools.
+
+The script is written in Python and combines interactive prompts with logic-driven automation. It allows users to select scan types, provide or download credential lists, run fast scans with Masscan, detect open services using Nmap, and test for known vulnerabilities using NSE scripts and exploit databases.
+
+This report outlines the structure of the script, the methodology used, test results, challenges encountered, and improvement recommendations.
+
+---
+
+# Methodologies
+
+### 1. Sudo Privilege Check
+
+The script begins by verifying that it is run with root privileges, as tools like Nmap and Medusa require elevated access.
+
+```python
+python
+if os.geteuid() != 0:
+    print("[!] This script must be run with sudo/root privileges.")
+    sys.exit(1)
+```
+
+---
+
+### 2. Dependency Check
+
+It checks for required tools:
+
+- `nmap`
+- `hydra`
+- `medusa`
+- `masscan`
+- `searchsploit`
+
+If missing, the script prompts the user to install them.
+
+---
+
+### 3. User Input Handling
+
+The user is prompted for:
+
+- Network CIDR (e.g., 192.168.1.0/24)
+- Output path and folder name
+- Scan mode: **Basic** or **Full**
+- Whether to use **Masscan**
+- Custom or auto-downloaded username/password lists
+
+Wordlists are fetched from GitHub if not supplied.
+
+---
+
+### 4. Network and Port Discovery
+
+- **Masscan** (optional) is used for fast port discovery across large ranges.
+- **Nmap** is used for detailed service version detection on open ports.
+
+---
+
+### 5. Weak Credential Brute-Force
+
+The script detects live hosts from Nmap results and attempts to brute-force:
+
+- **SSH** using **Medusa**
+- **FTP, TELNET, RDP** using **Hydra**
+
+Each result is saved in a separate file. The script exits early on success if `stop_on_success=True`.
+
+---
+
+### 6. Vulnerability Enumeration (Full Scan Mode)
+
+Based on detected services, relevant **Nmap NSE scripts** are run with a timeout of 10 seconds to keep the scan efficient.
+
+Examples:
+
+- `ftp-anon`
+- `ssh-brute`
+- `http-enum`
+- `smb-vuln-ms17-010`
+
+---
+
+### 7. Exploit Lookup via Searchsploit
+
+Service names are parsed from Nmap output and passed to **Searchsploit**, which performs a local Exploit-DB search.
+
+The output is cleaned using `--disablecolor` and saved to a file.
+
+---
+
+### 8. Search & Archival
+
+Users can search for specific keywords across all result files.
+
+Finally, the result folder is zipped and saved as an archive for easy sharing or backup.
+
+---
+
+# Discussion
+
+The script was tested in a lab environment with a virtual machine running common network services.
+
+Key observations:
+
+- Masscan dramatically reduced port scanning time on larger subnets.
+- Medusa was more stable than Hydra for SSH, especially against slow or rate-limited servers.
+- NSE scans provided valuable information but occasionally timed out if not capped.
+- The regex-based parsing of Nmap output solved Hydra's misinterpretation of hostnames.
+- Searchsploit output initially had ANSI formatting issues, which were resolved with the `-disablecolor` flag.
+
+The automation successfully mimicked common recon and credential attacks while producing organized logs and summaries.
+
+---
+
+# Conclusion
+
+This project successfully delivered a modular, interactive, and extensible scanning tool that consolidates key early-stage penetration testing techniques into a Python script.
+
+The script’s automation features reduce human error, save time, and provide consistent output. It’s ideal for SOC analysts, red teamers in training, and cybersecurity students.
+
+With user-friendly features such as automatic wordlist handling, early exit on success, keyword search, and full result archiving, the script is a practical and educational security tool.
+
+---
+
+# Recommendation
+
+To enhance the current tool, the following improvements are recommended:
+
+1. **Add a GUI (e.g., Tkinter or Flask)**
+    
+    To allow easier use for non-technical users.
+    
+2. **Expand Service Coverage**
+    
+    Include brute-force support for SMB, MySQL, HTTP basic auth, etc.
+    
+3. **Threading or Async Support**
+    
+    Use concurrent scanning or threading for performance on large networks.
+    
+4. **Vulnerability Summary Generation**
+    
+    Summarize results into a short markdown or PDF report post-scan.
+    
+5. **Cloud-based Upload or Reporting**
+    
+    Automatically upload reports to a secure portal or dashboard.
