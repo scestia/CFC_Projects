@@ -14,4 +14,4 @@
 
 ## Final Report on SOC Analyst
 
-- [Shadow Sentry Final Report](https://www.notion.so/Final-Report-A-SOC-Analyst-Investigation-into-Detection-Monitoring-22aec830b3bc80b79523e39b05fa085e?pvs=21)hi
+- [Shadow Sentry Final Report](https://www.notion.so/Final-Report-A-SOC-Analyst-Investigation-into-Detection-Monitoring-22aec830b3bc80b79523e39b05fa085e?pvs=21)
