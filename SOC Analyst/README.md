@@ -1,3 +1,7 @@
+The ever-evolving landscape of cybersecurity threats requires organizations to implement robust monitoring and detection systems capable of responding to malicious activity in real time. This report presents the culmination of the Shadow Sentry project—a comprehensive SOC (Security Operations Center) analyst exercise designed to simulate, detect, and analyze various cyberattacks using Elastic Stack tools on a cloud-based environment.
+
+The primary goal of this project is to gain hands-on experience in threat detection through the deployment of Elastic Cloud, configuration of honeypots, execution of attack simulations, and the design of dashboards for monitoring and analysis. The project emphasizes both the offensive and defensive perspectives of cybersecurity by allowing students to simulate real-world attacks and observe how those attacks manifest within a well-structured SIEM environment.
+
 # SOC Analyst Project Reports
 
 ## Installation Guide
