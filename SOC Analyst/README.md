@@ -6,7 +6,7 @@ The primary goal of this project is to gain hands-on experience in threat detect
 
 ## Installation Guide
 
-- [Shadow Sentry Deployment Guide](https://www.notion.so/Shadow-Sentry-Attack-Simulation-22aec830b3bc800e8af5c5331abdea01?pvs=21)
+- [Shadow Sentry Deployment Guide](https://app.notion.com/p/Shadow-Sentry-SOC-Project-Installation-Guide-228ec830b3bc8043876fe8bdeda8d265?source=copy_link)
 
 ## Testing Results
 
